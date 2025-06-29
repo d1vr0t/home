@@ -2,7 +2,7 @@
   description = "Home Manager configuration of wcka";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
+    editor.url = "github:d1vr0t/wckavim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -10,14 +10,28 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      editor,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+      wckavim = editor.packages.${system}.wckavim;
+    in
+    {
       homeConfigurations."wcka" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
+        extraSpecialArgs = {
+          inherit wckavim;
+        };
       };
+
+      files.homeConfig = ./home.nix;
+
     };
 }
