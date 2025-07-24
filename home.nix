@@ -31,6 +31,7 @@
         manix # Nix fuzzy search
         firefox
         tor-browser
+        nerd-fonts.inconsolata-go
       ]
       ++ [ wckavim ]
       ++ builtins.attrValues (
