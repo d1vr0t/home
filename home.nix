@@ -31,7 +31,9 @@
         manix # Nix fuzzy search
         firefox
         tor-browser
-        nerd-fonts.inconsolata-go
+	nerd-fonts.inconsolata-go
+	audacity
+	ffmpeg
       ]
       ++ [ wckavim ]
       ++ builtins.attrValues (
@@ -96,18 +98,37 @@
 
     home-manager.enable = true;
   };
-  services.podman = {
-    enable = true;
-    containers = {
-      excalidraw = {
-        image = "excalidraw/excalidraw:latest";
-        autoStart = true;
-        ports = [
-          "127.0.0.1:1602:80"
-        ];
-        environment.TZ = "Europe/Berlin";
+  services = {
+    podman = {
+      enable = true;
+      containers = {
+        excalidraw = {
+          image = "excalidraw/excalidraw:latest";
+          autoStart = true;
+          ports = [
+            "127.0.0.1:1602:80"
+          ];
+          environment.TZ = "Europe/Berlin";
+        };
+
+      };
+    };
+
+  };
+
+  systemd.user.services = {
+    auto-document-upload = {
+      Unit = {
+        Description = "Uploads scanned documents to paperless";
       };
 
+      Service = {
+        ExecStart = "${pkgs.callPackage ./scripts/auto-upload-scanned-docs.nix { }}/bin/auto-upload-scans";
+        Restart = "on-failure";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
     };
   };
 
