@@ -31,7 +31,6 @@
         manix # Nix fuzzy search
         firefox
         tor-browser
-	nerd-fonts.inconsolata-go
 	audacity
 	ffmpeg
       ]
@@ -130,10 +129,6 @@
         WantedBy = [ "default.target" ];
       };
     };
-  };
-
-  fonts = {
-    fontconfig.enable = true;
   };
 
   home.stateVersion = "24.11";
