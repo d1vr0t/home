@@ -1,4 +1,4 @@
-{writeScriptBin, inotify-tools, ...}:
+{writeScriptBin, inotify-tools, openssh, ...}:
 
 writeScriptBin "auto-upload-scans" ''
 #!/bin/sh
@@ -15,7 +15,7 @@ do
     sleep 10
     # Upload via scp (or rsync)
     if [[ "''${FILE}" == *.pdf ]];
-    then scp "$FILE" "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR"
+    then ${openssh}/bin/scp "$FILE" "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR"
     else echo "File was not a pdf"
     fi
 done
