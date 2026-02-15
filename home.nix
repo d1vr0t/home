@@ -31,8 +31,8 @@
         manix # Nix fuzzy search
         firefox
         tor-browser
-	audacity
-	ffmpeg
+        audacity
+        ffmpeg
       ]
       ++ [ wckavim ]
       ++ builtins.attrValues (
@@ -46,9 +46,9 @@
   programs = {
     git = {
       enable = true;
-      userName = "Alexander Weck";
-      userEmail = "accounts@awck.de";
-      extraConfig = {
+      settings = {
+        user.name = "Alexander Weck";
+        user.email = "accounts@awck.de";
         safe.directory = "/etc/nixos";
         core.editor = "nvim";
       };
